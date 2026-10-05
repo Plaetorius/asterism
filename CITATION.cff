@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use this software or the data, please cite it as below."
+title: "fusion-corpus: an open fusion-science literature corpus with an MCP server"
+type: software
+authors:
+  - family-names: "Gernez"
+    given-names: "Tom"
+    email: "plaetorius@gmail.com"
+repository-code: "https://github.com/Plaetorius/fusion-corpus"
+license: MIT
+version: "1.0.0"
+date-released: "2026-10-05"
+keywords:
+  - fusion energy
+  - retrieval-augmented generation
+  - LLM evaluation
+  - pre-registration
+  - literature corpus

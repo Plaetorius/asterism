@@ -1,0 +1,28 @@
+[project]
+name = "fusion-corpus"
+version = "1.0.0"
+description = "Open fusion-science literature corpus (Nuclear Fusion, PPCF) with a read-only MCP server"
+readme = "README.md"
+authors = [
+    { name = "Tom Gernez", email = "plaetorius@gmail.com" }
+]
+license = "MIT"
+requires-python = ">=3.12"
+dependencies = [
+    "mcp[cli]>=2.2.0",
+    "pydantic>=2.13.5",
+    "zstandard>=0.23.0",
+]
+
+[project.scripts]
+fusion-corpus = "fusion_corpus.cli:main"
+
+[build-system]
+requires = ["uv_build>=0.11.7,<0.12.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "ruff>=0.16.10",
+]
