@@ -2,19 +2,19 @@
   "version": "v1.0.0",
   "archives": {
     "db": {
-      "url": "https://huggingface.co/datasets/Plaetorius/fusion-corpus/resolve/main/fusion-corpus-db-v1.0.0.tar.zst",
+      "url": "https://huggingface.co/datasets/Plaetorius/asterism-fusion-corpus/resolve/main/fusion-corpus-db-v1.0.0.tar.zst",
       "size": 179936298,
       "sha256": "80dd037ddfc4c93b3c02dbe5d5d8c1550244255e1c6541735b55de7303b8f646",
       "note": "catalog.sqlite + tables.sqlite + docs (default)"
     },
     "jsonl": {
-      "url": "https://huggingface.co/datasets/Plaetorius/fusion-corpus/resolve/main/fusion-corpus-jsonl-v1.0.0.tar.zst",
+      "url": "https://huggingface.co/datasets/Plaetorius/asterism-fusion-corpus/resolve/main/fusion-corpus-jsonl-v1.0.0.tar.zst",
       "size": 142179796,
       "sha256": "92534abac6ff6bf567eb4efcd7f7e280d99e4181d38237e13dfc46bc1c6a9d2a",
-      "note": "JSONL exports (fusion-corpus download --full)"
+      "note": "JSONL exports (asterism-mcp download --full)"
     },
     "nc-sa": {
-      "url": "https://huggingface.co/datasets/Plaetorius/fusion-corpus/resolve/main/fusion-corpus-nc-sa-v1.0.0.tar.zst",
+      "url": "https://huggingface.co/datasets/Plaetorius/asterism-fusion-corpus/resolve/main/fusion-corpus-nc-sa-v1.0.0.tar.zst",
       "size": 102676,
       "sha256": "5a76d76e89c9c3da94c1d251e906f5af2e1b5c9499df23bccb4b970163985429",
       "note": "3 CC BY-NC-SA papers (--with-nc)"

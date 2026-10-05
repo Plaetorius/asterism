@@ -1,7 +1,7 @@
 """Where the served data lives, and what to say when it is missing.
 
-Order: `FUSION_CORPUS_DATA`, then `~/.fusion-corpus/`. The directory holds `catalog.sqlite` and `tables.sqlite`
-(written by `fusion-corpus download`). Nothing here creates or writes anything.
+Order: `ASTERISM_DATA`, then `~/.asterism/`. The directory holds `catalog.sqlite` and `tables.sqlite`
+(written by `asterism-mcp download`). Nothing here creates or writes anything.
 """
 
 from __future__ import annotations
@@ -9,8 +9,8 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
-DEFAULT_DIR = Path.home() / ".fusion-corpus"
-MISSING_HINT = "run: fusion-corpus download"
+DEFAULT_DIR = Path.home() / ".asterism"
+MISSING_HINT = "run: asterism-mcp download"
 
 
 class DataMissing(RuntimeError):
@@ -18,7 +18,7 @@ class DataMissing(RuntimeError):
 
 
 def data_dir() -> Path:
-    return Path(os.environ.get("FUSION_CORPUS_DATA") or DEFAULT_DIR)
+    return Path(os.environ.get("ASTERISM_DATA") or DEFAULT_DIR)
 
 
 def _require(path: Path, what: str) -> Path:
@@ -32,7 +32,7 @@ def catalog_path() -> Path:
 
 
 def tables_path() -> Path:
-    explicit = os.environ.get("FUSION_TABLES_DB")
+    explicit = os.environ.get("ASTERISM_TABLES_DB")
     if explicit:
         return _require(Path(explicit), "tables database")
     base = data_dir()
@@ -42,4 +42,4 @@ def tables_path() -> Path:
 
 def include_nc() -> bool:
     """CC BY-NC-SA papers are hidden unless the user opts in."""
-    return os.environ.get("FUSION_CORPUS_INCLUDE_NC") == "1"
+    return os.environ.get("ASTERISM_INCLUDE_NC") == "1"

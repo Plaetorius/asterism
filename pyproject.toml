@@ -1,5 +1,5 @@
 [project]
-name = "fusion-corpus"
+name = "asterism-mcp"
 version = "1.0.0"
 description = "Open fusion-science literature corpus (Nuclear Fusion, PPCF) with a read-only MCP server"
 readme = "README.md"
@@ -15,7 +15,7 @@ dependencies = [
 ]
 
 [project.scripts]
-fusion-corpus = "fusion_corpus.cli:main"
+asterism-mcp = "asterism_mcp.cli:main"
 
 [build-system]
 requires = ["uv_build>=0.11.7,<0.12.0"]

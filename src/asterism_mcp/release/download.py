@@ -1,4 +1,4 @@
-"""`fusion-corpus download`: fetch the data archives, verify their checksums, unpack to ~/.fusion-corpus/.
+"""`asterism-mcp download`: fetch the data archives, verify their checksums, unpack to ~/.asterism/.
 
 URLs, sizes and sha256 are pinned in `sources.json` (or passed with `--sources`). Downloads resume after an
 interruption, retry on network errors, and are refused on a checksum mismatch. Nothing outside the target
@@ -19,7 +19,7 @@ from pathlib import Path
 
 import zstandard
 
-from fusion_corpus.serve import data
+from asterism_mcp.serve import data
 
 SOURCES = Path(__file__).with_name("sources.json")
 CHUNK = 1 << 20
@@ -128,19 +128,19 @@ def run(target: Path, sources: dict, full: bool = False, with_nc: bool = False) 
 
 
 def client_config(target: Path) -> str:
-    env = {} if target == data.DEFAULT_DIR else {"FUSION_CORPUS_DATA": str(target)}
-    server = {"command": "fusion-corpus", "args": ["mcp"], **({"env": env} if env else {})}
-    add_env = "".join(f" -e FUSION_CORPUS_DATA={target}" for _ in env)
+    env = {} if target == data.DEFAULT_DIR else {"ASTERISM_DATA": str(target)}
+    server = {"command": "asterism-mcp", "args": ["mcp"], **({"env": env} if env else {})}
+    add_env = "".join(f" -e ASTERISM_DATA={target}" for _ in env)
     return "\n".join([
         "Data ready. Add the server to your AI client:", "",
-        "Claude Code:", f"  claude mcp add fusion-corpus{add_env} -- fusion-corpus mcp", "",
+        "Claude Code:", f"  claude mcp add asterism{add_env} -- asterism-mcp mcp", "",
         "Claude Desktop (claude_desktop_config.json) and Cursor (.cursor/mcp.json):",
-        json.dumps({"mcpServers": {"fusion-corpus": server}}, indent=2)])
+        json.dumps({"mcpServers": {"asterism": server}}, indent=2)])
 
 
 def main(argv: list[str] | None = None) -> int:
-    ap = argparse.ArgumentParser(prog="fusion-corpus download", description=__doc__.split("\n\n")[0])
-    ap.add_argument("--dir", type=Path, default=data.data_dir(), help="target directory (default ~/.fusion-corpus)")
+    ap = argparse.ArgumentParser(prog="asterism-mcp download", description=__doc__.split("\n\n")[0])
+    ap.add_argument("--dir", type=Path, default=data.data_dir(), help="target directory (default ~/.asterism)")
     ap.add_argument("--full", action="store_true", help="also fetch the JSONL exports")
     ap.add_argument("--with-nc", action="store_true", help="also fetch the 3 CC BY-NC-SA papers")
     ap.add_argument("--sources", help="alternative sources.json (path or URL)")

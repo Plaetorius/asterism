@@ -5,8 +5,8 @@ from __future__ import annotations
 import json
 import sqlite3
 
-from fusion_corpus.index.normalize import fts_query, fts_query_any
-from fusion_corpus.serve.attribution import NC_FILTER
+from asterism_mcp.index.normalize import fts_query, fts_query_any
+from asterism_mcp.serve.attribution import NC_FILTER
 
 SNIPPET_CHARS = 320
 MAX_LIMIT = 50

@@ -7,6 +7,6 @@ about: Something wrong with the server, the download, or the data
 
 **Command or tool call**, with arguments:
 
-**Version** (`cat ~/.fusion-corpus/VERSION`; `uvx fusion-corpus --help` prints no version, so name the release):
+**Version** (`cat ~/.asterism/VERSION`; name the release you installed):
 
 **Client** (Claude Code, Claude Desktop, Cursor, other) and OS:

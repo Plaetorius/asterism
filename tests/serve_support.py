@@ -6,7 +6,7 @@ import json
 import sqlite3
 from pathlib import Path
 
-from fusion_corpus.index.normalize import normalise
+from asterism_mcp.index.normalize import normalise
 
 BY, NC = "http://creativecommons.org/licenses/by/4.0/", "http://creativecommons.org/licenses/by-nc-sa/3.0/"
 SENT = "The H98 factor of the EAST type-II ELMy H-mode reached 1.1 with EC and NBI heating. "

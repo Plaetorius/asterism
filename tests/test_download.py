@@ -7,7 +7,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import pytest
 import zstandard
 
-from fusion_corpus.release import download as D
+from asterism_mcp.release import download as D
 
 
 def _archive(files: dict[str, bytes], extra: list[tarfile.TarInfo] | None = None) -> bytes:
@@ -121,4 +121,4 @@ def test_selection_and_config_snippets(tmp_path):
     assert D.selected({}, False, False) == ["db"]
     assert D.selected({}, True, True) == ["db", "jsonl", "nc-sa"]
     text = D.client_config(tmp_path)
-    assert "claude mcp add fusion-corpus" in text and "mcpServers" in text and str(tmp_path) in text
+    assert "claude mcp add asterism" in text and "mcpServers" in text and str(tmp_path) in text

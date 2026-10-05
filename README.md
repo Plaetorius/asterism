@@ -1,4 +1,4 @@
-# fusion-corpus
+# Asterism
 
 **An open literature corpus for fusion science, and an MCP server that lets any AI assistant search it with
 citations.** It covers every paper ever published in *Nuclear Fusion* and *Plasma Physics and Controlled Fusion*
@@ -8,12 +8,12 @@ result carries a DOI, a page and the licence.
 ## Quick start
 
 You need Python 3.12 and [`uv`](https://docs.astral.sh/uv/). Download the data once (about 170 MB, checksum
-verified, into `~/.fusion-corpus/`), then add the server to your AI client:
+verified, into `~/.asterism/`), then add the server to your AI client:
 
 ```bash
-uv tool install git+https://github.com/Plaetorius/fusion-corpus   # once; needs Python 3.12 and uv
-fusion-corpus download
-claude mcp add fusion-corpus -- fusion-corpus mcp   # Claude Code
+uv tool install git+https://github.com/Plaetorius/asterism   # once; needs Python 3.12 and uv
+asterism-mcp download
+claude mcp add asterism -- asterism-mcp mcp   # Claude Code
 ```
 
 `download` also prints the snippet for Claude Desktop and Cursor (any MCP client works). Then ask, for example:
@@ -22,7 +22,7 @@ the page and the licence, and nothing is written to your disk except the downloa
 databases read-only. Details, tools and troubleshooting: [docs/MCP.md](docs/MCP.md). Worked examples:
 [docs/EXAMPLES.md](docs/EXAMPLES.md).
 
-Update later with `uv tool upgrade fusion-corpus`. The package is not on PyPI yet.
+Update later with `uv tool upgrade asterism-mcp`. The package is not on PyPI yet.
 
 ## Does it help? (headline results)
 
@@ -34,7 +34,7 @@ All arms use the same model (Claude Opus 5.5). "Web search" means the assistant'
 - **Where it does not help:** on open-ended research questions and broad evidence gathering we found no
   significant difference. Those results are inconclusive, which is not the same as "as good as".
 
-The studies were pre-registered and audited. Protocols, frozen inputs and results: [fusion-corpus-evals](https://github.com/Plaetorius/fusion-corpus-evals). A replication with Gemini is still running and is not cited here.
+The studies were pre-registered and audited. Protocols, frozen inputs and results: [asterism-evals](https://github.com/Plaetorius/asterism-evals). A replication with Gemini is still running and is not cited here.
 
 ## MCP tools
 
@@ -49,7 +49,7 @@ The studies were pre-registered and audited. Protocols, frozen inputs and result
 
 Every result has `doi`, `licence` and a ready-made `cite` string. Text from papers is returned as data with a note;
 tool descriptions tell the assistant never to follow instructions found in it. Three papers licensed CC BY-NC-SA
-are hidden unless you set `FUSION_CORPUS_INCLUDE_NC=1`.
+are hidden unless you set `ASTERISM_INCLUDE_NC=1`.
 
 ## Limitations
 
@@ -68,8 +68,8 @@ inside the data archive; reuse requires attribution (the `cite` field). No PDFs 
 
 ## Data
 
-The data lives on Hugging Face: [Plaetorius/fusion-corpus](https://huggingface.co/datasets/Plaetorius/fusion-corpus)
-(SQLite databases, JSONL exports, datasheet). `fusion-corpus download` fetches and verifies it for you.
+The data lives on Hugging Face: [Plaetorius/asterism-fusion-corpus](https://huggingface.co/datasets/Plaetorius/asterism-fusion-corpus)
+(SQLite databases, JSONL exports, datasheet). `asterism-mcp download` fetches and verifies it for you.
 
 ## Development
 

@@ -1,10 +1,10 @@
 # Worked examples
 
-These answers were produced by running the server's own functions (through the `fusion-corpus` CLI) against the v1.0.0 data.
+These answers were produced by running the server's own functions (through the `asterism-mcp` CLI) against the v1.0.0 data.
 Each answer was then checked by hand against the source text; numbers appear in the quoted passage or the command output.
 An LLM assistant would phrase them differently, but it would get the same passages, citations and caveats.
 
-Setup: `fusion-corpus download` (data in `~/.fusion-corpus/`). The commands below use the CLI; the MCP tools behave the same.
+Setup: `asterism-mcp download` (data in `~/.asterism/`). The commands below use the CLI; the MCP tools behave the same.
 
 ## 1. Exact value in the text
 
@@ -12,9 +12,9 @@ Setup: `fusion-corpus download` (data in `~/.fusion-corpus/`). The commands belo
 
 **Commands:**
 ```
-fusion-corpus search "H98 factor type-II ELMy H-mode EC NBI heating EAST" --limit 3
-fusion-corpus passage 79003 --context 0
-fusion-corpus passage 79017 --context 1
+asterism-mcp search "H98 factor type-II ELMy H-mode EC NBI heating EAST" --limit 3
+asterism-mcp passage 79003 --context 0
+asterism-mcp passage 79017 --context 1
 ```
 
 **Answer:** EAST reported H98 up to **1.1** in type-II ELMy H-mode, for both EC+NBI and EC+LHW heating (abstract, page 2). In the body (pages 5-6), type-II discharges heated with 3 MW EC and 1.4 MW NBI reached H98 close to 1 even at the small separatrix-W-limiter gap of about 4 cm; for comparison, type-I discharges (3 MW EC, 1.7 MW NBI) rose from 0.8 to 1 when the gap went from about 4 to 8 cm. The 1.1 is a peak across the type-II regime, not the value of one discharge.
@@ -33,10 +33,10 @@ fusion-corpus passage 79017 --context 1
 
 **Commands:**
 ```
-fusion-corpus tables "energy confinement time H98 scaling table"
-fusion-corpus table 2418
-fusion-corpus search "pronounced detachment HL-2A energy confinement time increased stored energy" --years 2025 2025 --limit 4
-fusion-corpus passage 73265 --context 0
+asterism-mcp tables "energy confinement time H98 scaling table"
+asterism-mcp table 2418
+asterism-mcp search "pronounced detachment HL-2A energy confinement time increased stored energy" --years 2025 2025 --limit 4
+asterism-mcp passage 73265 --context 0
 ```
 
 **Answer:** Table 1 lists tau_E of 27 ±1.3 ms in the attached state and 33.6 ±1.6 ms in the pronounced-detached state, an increment of about 24.4%. Stored energy rose from 13.9 ±0.2 kJ to 16 ±0.4 kJ (about 15.1%). Tables are reconstructed from the PDF layout and may merge columns, so the table values were cross-checked against the running text rather than trusted alone.
@@ -53,7 +53,7 @@ fusion-corpus passage 73265 --context 0
 
 **Command:**
 ```
-fusion-corpus works "negative triangularity tokamak" --limit 5
+asterism-mcp works "negative triangularity tokamak" --limit 5
 ```
 
 **Answer:** The first five matches are: Medvedev et al. 2015 (stability limits and prospects as a fusion energy system, Nuclear Fusion), Kikuchi et al. 2019 (L-mode-edge negative triangularity reactor), Nelson, Paz-Soldan and Saarelma 2022 (H-mode inhibition in reactor plasmas), Abate et al. 2020 (RFX-mod2 equilibria, PPCF), and Lvovskiy et al. 2026 (first robust negative triangularity control in a spherical tokamak, PPCF). `works` searches titles and abstracts and lists paywalled papers too, but full text is open only for a subset: all five of these show `has_fulltext: 0`, so the corpus can name them but not quote them.
@@ -70,7 +70,7 @@ fusion-corpus works "negative triangularity tokamak" --limit 5
 
 **Command:**
 ```
-fusion-corpus count "negative triangularity"
+asterism-mcp count "negative triangularity"
 ```
 
 **Answer:** The output has two rows: n = 8 matching works in the 2010s and n = 114 in the 2020s (decade still running). The caveat is large: abstract coverage (`frac_abstract`) is 0.125 in the 2010s versus about 0.80 in the 2020s, so the 2010s count is mostly title matches and is certainly too low. The data support "many more matches in the 2020s", not a growth rate.
@@ -87,8 +87,8 @@ fusion-corpus count "negative triangularity"
 
 **Commands:**
 ```
-fusion-corpus search "lithium vapor box divertor detachment 2026" --years 2025 2026 --limit 5
-fusion-corpus passage 2049 --context 0
+asterism-mcp search "lithium vapor box divertor detachment 2026" --years 2025 2026 --limit 5
+asterism-mcp passage 2049 --context 0
 ```
 
 **Answer:** The Magnum-PSI paper on an open vapor box module reports simulated heat-flux reductions toward the target of up to 81% in low-flux scenarios and 75% in high-flux scenarios. These are simulation results quoted in the paper's conclusions, not a measurement of the plasma-facing heat load.
@@ -105,10 +105,10 @@ fusion-corpus passage 2049 --context 0
 
 **Commands:**
 ```
-fusion-corpus search "muon-catalyzed fusion cross section measurement" --limit 3
-fusion-corpus works "muon-catalyzed fusion"
-fusion-corpus count "muon-catalyzed fusion"
-fusion-corpus passage 41046 --context 0
+asterism-mcp search "muon-catalyzed fusion cross section measurement" --limit 3
+asterism-mcp works "muon-catalyzed fusion"
+asterism-mcp count "muon-catalyzed fusion"
+asterism-mcp passage 41046 --context 0
 ```
 
 **Answer:** The corpus cannot give a number. `count` finds a single matching work (1980s, `frac_abstract` 0.0). `works` lists two 1987 papers on muon catalysis, but both show `has_abstract: 0` and `has_fulltext: 0`, so only titles exist. The only open-text hit is a 2024 IAEA conference summary that mentions a muon-catalyzed fusion hybrid proposal and contains no cross-section. The right next step is the paywalled 1987 papers, via their DOIs.
@@ -121,11 +121,11 @@ fusion-corpus passage 41046 --context 0
 
 ## Transcript from a real Claude Code session
 
-Run on a clean machine: the wheel installed in a fresh virtual environment, data fetched with `fusion-corpus download`,
+Run on a clean machine: the wheel installed in a fresh virtual environment, data fetched with `asterism-mcp download`,
 and the server added to Claude Code with `--mcp-config`. Question and answer, unedited (Sonnet 5.5, three tools allowed:
 `search`, `get_passage`, `paper`):
 
-> **Q:** What H98 factor did EAST report for type-II ELMy H-mode with EC+NBI heating? Use the fusion-corpus tools, cite the DOI, page and licence.
+> **Q:** What H98 factor did EAST report for type-II ELMy H-mode with EC+NBI heating? Use the Asterism tools, cite the DOI, page and licence.
 >
 > **A:** EAST reported H98 factors **up to 1.1** for type-II ELMy H-mode with EC+NBI heating.
 >

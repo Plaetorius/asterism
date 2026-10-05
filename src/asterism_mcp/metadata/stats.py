@@ -14,7 +14,7 @@ from collections import defaultdict
 from dataclasses import dataclass
 from datetime import UTC, date, datetime
 
-from fusion_corpus.metadata import licence as lic
+from asterism_mcp.metadata import licence as lic
 
 DECADE = 10
 

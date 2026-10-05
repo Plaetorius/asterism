@@ -6,7 +6,7 @@ import json
 import sqlite3
 from pathlib import Path
 
-from fusion_corpus.index.normalize import fts_query, fts_query_any
+from asterism_mcp.index.normalize import fts_query, fts_query_any
 
 MAX_ROWS_IN_HIT = 6
 

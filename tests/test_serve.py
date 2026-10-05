@@ -6,8 +6,8 @@ from pathlib import Path
 import pytest
 from serve_support import build
 
-from fusion_corpus.serve import attribution, data
-from fusion_corpus.serve import mcp_server as M
+from asterism_mcp.serve import attribution, data
+from asterism_mcp.serve import mcp_server as M
 
 pytestmark = pytest.mark.filterwarnings("ignore")
 
@@ -15,10 +15,10 @@ pytestmark = pytest.mark.filterwarnings("ignore")
 @pytest.fixture
 def served(tmp_path, monkeypatch):
     root = build(tmp_path / "data")
-    monkeypatch.setenv("FUSION_CORPUS_DATA", str(root))
-    monkeypatch.delenv("FUSION_CORPUS_INCLUDE_NC", raising=False)
-    monkeypatch.delenv("FUSION_CORPUS_QUERY_LOG", raising=False)
-    monkeypatch.delenv("FUSION_TABLES_DB", raising=False)
+    monkeypatch.setenv("ASTERISM_DATA", str(root))
+    monkeypatch.delenv("ASTERISM_INCLUDE_NC", raising=False)
+    monkeypatch.delenv("ASTERISM_QUERY_LOG", raising=False)
+    monkeypatch.delenv("ASTERISM_TABLES_DB", raising=False)
     monkeypatch.setattr(M, "_conn", None)
     monkeypatch.setattr(M, "_nc_ids", None)
     return root
@@ -43,7 +43,7 @@ def test_fifty_tool_calls_leave_the_data_directory_unchanged(served):
 
 def test_log_goes_to_the_named_file_only(served, tmp_path, monkeypatch):
     log = tmp_path / "q.jsonl"
-    monkeypatch.setenv("FUSION_CORPUS_QUERY_LOG", str(log))
+    monkeypatch.setenv("ASTERISM_QUERY_LOG", str(log))
     before = _digest(served)
     M.search("H98")
     assert json.loads(log.read_text().splitlines()[0])["tool"] == "search"
@@ -51,17 +51,17 @@ def test_log_goes_to_the_named_file_only(served, tmp_path, monkeypatch):
 
 
 def test_missing_data_says_how_to_download(tmp_path, monkeypatch):
-    monkeypatch.setenv("FUSION_CORPUS_DATA", str(tmp_path / "nothing"))
+    monkeypatch.setenv("ASTERISM_DATA", str(tmp_path / "nothing"))
     monkeypatch.setattr(M, "_conn", None)
-    with pytest.raises(data.DataMissing, match="fusion-corpus download"):
+    with pytest.raises(data.DataMissing, match="asterism-mcp download"):
         M.search("H98")
-    with pytest.raises(data.DataMissing, match="fusion-corpus download"):
+    with pytest.raises(data.DataMissing, match="asterism-mcp download"):
         M.search_tables("H98")
 
 
 def test_default_directory_is_home_dotdir(monkeypatch):
-    monkeypatch.delenv("FUSION_CORPUS_DATA", raising=False)
-    assert data.data_dir() == Path.home() / ".fusion-corpus"
+    monkeypatch.delenv("ASTERISM_DATA", raising=False)
+    assert data.data_dir() == Path.home() / ".asterism"
 
 
 def test_cc_by_result_carries_doi_licence_and_cite(served):
@@ -78,7 +78,7 @@ def test_nc_sa_paper_is_absent_by_default_and_present_on_opt_in(served, monkeypa
     assert {t["doi"] for t in M.search_tables("H98")} == {"10.1/by"}
     assert M.paper("doi:10.1/nc")["error"] == "excluded"
     assert M.get_table(2)["error"] == "excluded"
-    monkeypatch.setenv("FUSION_CORPUS_INCLUDE_NC", "1")
+    monkeypatch.setenv("ASTERISM_INCLUDE_NC", "1")
     monkeypatch.setattr(M, "_nc_ids", None)
     assert {h["doi"] for h in M.search("H98")} == {"10.1/by", "10.1/nc"}
     nc = next(h for h in M.search("H98") if h["doi"] == "10.1/nc")

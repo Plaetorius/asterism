@@ -2,7 +2,7 @@
 license: cc-by-4.0
 language:
 - en
-pretty_name: fusion-corpus (Nuclear Fusion and PPCF)
+pretty_name: Asterism fusion corpus (Nuclear Fusion and PPCF)
 size_categories:
 - 100K<n<1M
 task_categories:
@@ -16,19 +16,19 @@ tags:
 - mcp
 ---
 
-# fusion-corpus v1.0.0
+# Asterism fusion corpus v1.0.0
 
 A searchable, citable corpus of the fusion-plasma literature: **24,101 works** from *Nuclear Fusion* and *Plasma
 Physics and Controlled Fusion* (1960 to 2026), with **full text, 165,951 passages and 3,893 reconstructed tables**
 for the **3,494 articles** that carry a Creative Commons licence on the version of record. Every record traces to a
-DOI. No PDFs are distributed. Code and the MCP server: https://github.com/Plaetorius/fusion-corpus
+DOI. No PDFs are distributed. Code and the MCP server: https://github.com/Plaetorius/asterism
 
 ## Use
 
 ```bash
-uv tool install git+https://github.com/Plaetorius/fusion-corpus
-fusion-corpus download          # these archives, checksum-verified, into ~/.fusion-corpus/
-claude mcp add fusion-corpus -- fusion-corpus mcp
+uv tool install git+https://github.com/Plaetorius/asterism
+asterism-mcp download          # these archives, checksum-verified, into ~/.asterism/
+claude mcp add asterism -- asterism-mcp mcp
 ```
 
 ## Files
@@ -83,14 +83,14 @@ Pre-registered, audited studies (same model, Claude Opus 5.5, in every setup; "w
 built-in search and fetch): exact facts from recent papers, corpus 93 % vs web search 74 % (129 questions); values
 printed in tables, 99 % vs 57 % (69 questions); papers public only after the model's training cutoff, 98 % vs 48 %
 (124 fact questions). On open-ended questions and broad evidence gathering there was no significant difference.
-Protocols and results: https://github.com/Plaetorius/fusion-corpus-evals
+Protocols and results: https://github.com/Plaetorius/asterism-evals
 
 ## Privacy
 
 Every released text value was scanned for the publisher's per-download stamps, cover-page residue, the
 maintainer's personal details, local paths and IP addresses: 0 must-not-ship hits (see `DATASHEET.md`). The
 articles' own author names, affiliations and correspondence addresses are published as printed in the articles.
-Take-down and error reports: https://github.com/Plaetorius/fusion-corpus/issues
+Take-down and error reports: https://github.com/Plaetorius/asterism/issues
 
 ## Citation
 
