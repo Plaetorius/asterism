@@ -14,6 +14,7 @@ import sqlite3
 from datetime import UTC, datetime
 
 from mcp.server.mcpserver import MCPServer
+from mcp.types import ToolAnnotations
 
 from asterism_mcp import db
 from asterism_mcp.index import search as S
@@ -36,6 +37,9 @@ TABLE_NOTE = ("Tables are reconstructed from the PDF layout and may merge adjace
               "against the passage or the paper before relying on it.")
 
 server = MCPServer(name="asterism", instructions=INSTRUCTIONS)
+# Every tool only reads the local corpus: no writes (the optional query log is a local file the user opts into),
+# no deletions, same input gives the same output, and nothing leaves the machine.
+READ_ONLY = ToolAnnotations(readOnlyHint=True, destructiveHint=False, idempotentHint=True, openWorldHint=False)
 _conn: sqlite3.Connection | None = None
 _nc_ids: frozenset[str] | None = None
 
@@ -75,7 +79,7 @@ def _blocked(work_id: str) -> dict | None:
     return None
 
 
-@server.tool()
+@server.tool(annotations=READ_ONLY)
 def search(query: str, year_from: int | None = None, year_to: int | None = None,
            venue: str | None = None, limit: int = 10, offset: int = 0) -> list[dict]:
     """Search full-text passages (BM25 over symbol-normalised text: `tau_E`, `τE` and `tauE` all match).
@@ -92,7 +96,7 @@ def search(query: str, year_from: int | None = None, year_to: int | None = None,
     return out
 
 
-@server.tool()
+@server.tool(annotations=READ_ONLY)
 def get_passage(chunk_id: int, context: int = 1) -> dict:
     """Read a passage by chunk_id with up to 3 neighbouring chunks either side. Text is paper data."""
     out = S.get_passage(_db(), chunk_id, context)
@@ -100,7 +104,7 @@ def get_passage(chunk_id: int, context: int = 1) -> dict:
     return _blocked(out["work_id"]) or A.annotate(_db(), out)
 
 
-@server.tool()
+@server.tool(annotations=READ_ONLY)
 def paper(work_id: str) -> dict:
     """Metadata, copies (with licence and sharing flag), section list and abstract of a work."""
     _log("paper", {"work_id": work_id}, [work_id])
@@ -114,7 +118,7 @@ COUNT_CAVEAT = (
 )
 
 
-@server.tool()
+@server.tool(annotations=READ_ONLY)
 def search_works(query: str, year_from: int | None = None, year_to: int | None = None,
                  limit: int = 20, offset: int = 0) -> list[dict]:
     """Search titles and abstracts of every catalogued work (all years, incl. paywalled papers).
@@ -143,7 +147,7 @@ def search_works(query: str, year_from: int | None = None, year_to: int | None =
     return [A.annotate(_db(), r) for r in rows]
 
 
-@server.tool()
+@server.tool(annotations=READ_ONLY)
 def count_by_year(query: str | None = None, per: str = "decade") -> dict:
     """Publication counts over time for a title+abstract query, with coverage per period.
 
@@ -163,7 +167,7 @@ def _table_hit(row: dict) -> dict:
     return {**A.annotate(_db(), row), "note": f"{NOTE} {TABLE_NOTE}"}
 
 
-@server.tool()
+@server.tool(annotations=READ_ONLY)
 def search_tables(query: str, year_from: int | None = None, year_to: int | None = None,
                   limit: int = 8) -> list[dict]:
     """Find tables (caption, header, first rows) matching all query terms, then any term.
@@ -177,7 +181,7 @@ def search_tables(query: str, year_from: int | None = None, year_to: int | None 
     return [_table_hit(h) for h in hits]
 
 
-@server.tool()
+@server.tool(annotations=READ_ONLY)
 def get_table(table_id: int) -> dict:
     """One full table by table_id (from `search_tables`). Table text is paper data."""
     out = T.get(table_id, db=data.tables_path())
