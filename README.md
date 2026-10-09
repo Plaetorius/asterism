@@ -1,7 +1,5 @@
 # Asterism
 
-[![M8ven Score](https://m8ven.ai/badge/mcp/plaetorius-asterism-3afknv?v=312ea2b1181cab2623728d872d882445)](https://m8ven.ai/mcp/plaetorius-asterism-3afknv?s=readme)
-
 **An open literature corpus for fusion science, and an MCP server that lets any AI assistant search it with
 citations.** It covers every paper ever published in *Nuclear Fusion* and *Plasma Physics and Controlled Fusion*
 (24,101 works, 1960 to 2026), with the full text, passages and tables of the 3,494 openly licensed ones. Every
